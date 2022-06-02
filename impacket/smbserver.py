@@ -3064,7 +3064,7 @@ class SMB2Commands:
         else:
             path = ntpath.basename(UNCOrShare)
 
-        share = searchShare(connId, path.upper(), smbServer)
+        share = searchShare(connId, path, smbServer)
         if share is not None:
             # Simple way to generate a Tid
             if len(connData['ConnectedShares']) == 0:
@@ -4867,7 +4867,7 @@ class SimpleSMBServer:
         return self.__server.getRegisteredNamedPipes()
 
     def addShare(self, shareName, sharePath, shareComment='', shareType='0', readOnly='no'):
-        share = shareName.upper()
+        share = shareName
         self.__smbConfig.add_section(share)
         self.__smbConfig.set(share, 'comment', shareComment)
         self.__smbConfig.set(share, 'read only', readOnly)

@@ -18,6 +18,7 @@ import sys
 import argparse
 import logging
 
+sys.path.insert(0,'.')
 from impacket.examples import logger
 from impacket import smbserver, version
 from impacket.ntlm import compute_lmhash, compute_nthash
@@ -32,7 +33,8 @@ if __name__ == '__main__':
                                      "For optional authentication, it is possible to specify username and password or the NTLM hash. "
                                      "Example: smbserver.py -comment 'My share' TMP /tmp")
 
-    parser.add_argument('shareName', action='store', help='name of the share to add')
+    parser.add_argument('shareName1', action='store', help='name of the first share to add')
+    parser.add_argument('shareName2', action='store', help='name of the secondshare to add')
     parser.add_argument('sharePath', action='store', help='path of the share to add')
     parser.add_argument('-comment', action='store', help='share\'s comment to display when asked for shares')
     parser.add_argument('-username', action="store", help='Username to authenticate clients')
@@ -70,7 +72,8 @@ if __name__ == '__main__':
 
     server = smbserver.SimpleSMBServer(listenAddress=options.interface_address, listenPort=int(options.port))
 
-    server.addShare(options.shareName.upper(), options.sharePath, comment)
+    server.addShare(options.shareName1, options.sharePath, comment)
+    server.addShare(options.shareName2, options.sharePath, comment)
     server.setSMB2Support(options.smb2support)
 
     # If a user was specified, let's add it to the credentials for the SMBServer. If no user is specified, anonymous
